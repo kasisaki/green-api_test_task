@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Interface</title>
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+            font-size: 32px;
+        }
+        .left-panel {
+            font-size: 24px;
+            width: 35%;
+            margin-left: 5%;
+            padding: 5%;
+        }
+        .left-panel input {
+            width: 100%;
+        }
+        .left-panel textarea {
+            width: 100%;
+            height: 50px;
+        }
+        .left-panel button {
+            width: 100%;
+            margin-bottom: 10%;
+            padding: 1%;
+        }
+        .right-panel {
+            width: 40%;
+            margin-right: 5%;
+            flex-grow: 1;
+            border: 1px solid #000;
+            
+        }
+        .right-panel pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            padding: 2%;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="left-panel">
+        <input type="text" id="idInstance" placeholder="idInstance">
+        <input type="text" id="apiTokenInstance" placeholder="ApiTokenInstance" style="margin-bottom: 40px">
+        <button onclick="getSettings()">getSettings</button>
+        <button onclick="getStateInstance()">getStateInstance</button>
+        <input type="text" id="phoneNumber" placeholder="77771234567" title="Phone Number" style="margin-top: 20%; margin-bottom: 1%">
+        <textarea id="messageText" placeholder="Hello World!" title="Message text"></textarea>
+        <button onclick="sendMessage()">sendMessage</button>
+        <input type="text" id="fileUrl" placeholder="https://my.site.com/img/horse.png">
+        <button onclick="sendFileByUrl()">sendFileByUrl</button>
+    </div>
+    <div class="right-panel">
+        <pre id="output">{
+    "idMessage": "3EBC7C7CD973B7C7C03D"
+}</pre>
+    </div>
+    <script>
+        const apiUrl = "https://1103.api.green-api.com";
+        const mediaUrl = "https://1103.api.green-api.com";
+        
+        async function getSettings() {
+            const idInstance = document.getElementById('idInstance').value;
+            const apiTokenInstance = document.getElementById('apiTokenInstance').value;
+
+            const url = `${apiUrl}/waInstance${idInstance}/getSettings/${apiTokenInstance}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const jsonResponse = await response.json();
+                document.getElementById('output').textContent = JSON.stringify(jsonResponse, null, 2);
+            } catch (error) {
+                document.getElementById('output').textContent = `Error: ${error.message}`;
+            }
+        }
+
+        async function getStateInstance() {
+            const idInstance = document.getElementById('idInstance').value;
+            const apiTokenInstance = document.getElementById('apiTokenInstance').value;
+
+            const url = `${apiUrl}/waInstance${idInstance}/getStateInstance/${apiTokenInstance}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const jsonResponse = await response.json();
+                document.getElementById('output').textContent = JSON.stringify(jsonResponse, null, 2);
+            } catch (error) {
+                document.getElementById('output').textContent = `Error: ${error.message}`;
+            }
+        }
+
+        function sendMessage() {
+            // Implement the sendMessage function here
+        }
+
+        function sendFileByUrl() {
+            // Implement the sendFileByUrl function here
+        }
+    </script>
+</body>
+</html>
