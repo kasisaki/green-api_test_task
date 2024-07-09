@@ -100,12 +100,67 @@
             }
         }
 
-        function sendMessage() {
-            // Implement the sendMessage function here
+        async function sendMessage() {
+            const idInstance = document.getElementById('idInstance').value;
+            const apiTokenInstance = document.getElementById('apiTokenInstance').value;
+            const message = document.getElementById('messageText').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+
+            const url = `${apiUrl}/waInstance${idInstance}/sendMessage/${apiTokenInstance}`;
+            const data = {
+            chatId: phoneNumber + "@c.us",
+            message: message
+        };
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const jsonResponse = await response.json();
+                document.getElementById('output').textContent = JSON.stringify(jsonResponse, null, 2);
+            } catch (error) {
+                document.getElementById('output').textContent = `Error: ${error.message}`;
+            }
         }
 
-        function sendFileByUrl() {
-            // Implement the sendFileByUrl function here
+        async function sendFileByUrl() {
+            const idInstance = document.getElementById('idInstance').value;
+            const apiTokenInstance = document.getElementById('apiTokenInstance').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const urlFile = document.getElementById('fileUrl').value;
+            const urlf = new URL(urlFile);
+            const fileName = urlf.pathname.split('/').pop();
+
+            const url = `${apiUrl}/waInstance${idInstance}/sendFileByUrl/${apiTokenInstance}`;
+            const data = {
+            chatId: phoneNumber + "@c.us",
+            urlFile: urlFile,
+            fileName: fileName
+        };
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const jsonResponse = await response.json();
+                document.getElementById('output').textContent = JSON.stringify(jsonResponse, null, 2);
+            } catch (error) {
+                document.getElementById('output').textContent = `Error: ${error.message}`;
+            }
         }
     </script>
 </body>
